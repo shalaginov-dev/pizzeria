@@ -1,18 +1,24 @@
 import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {setSort} from "../redux/slices/filterSlice";
 
-export function Sort({value, setSelectSortType}) {
+export const sortList = [
+    {name: 'популярности (DESC)', sortProperty: 'rating'},
+    {name: 'популярности (ASC)', sortProperty: '-rating'},
+    {name: 'цене (DESC)', sortProperty: 'price'},
+    {name: 'цене (ASC)', sortProperty: '-price'},
+    {name: 'алфавиту (DESC)', sortProperty: 'title'},
+    {name: 'алфавиту (ASC)', sortProperty: '-title'},
+]
+
+export function Sort() {
+    const dispatch = useDispatch()
+    const sort = useSelector(state => state.filter.sort)
+
     const [open, setOpen] = useState(false)
-    const list = [
-        {name: 'популярности (DESC)', sortProperty: 'rating'},
-        {name: 'популярности (ASC)', sortProperty: '-rating'},
-        {name: 'цене (DESC)', sortProperty: 'price'},
-        {name: 'цене (ASC)', sortProperty: '-price'},
-        {name: 'алфавиту (DESC)', sortProperty: 'title'},
-        {name: 'алфавиту (ASC)', sortProperty: '-title'},
-    ]
 
-    const onClickListItem = (index) => {
-        setSelectSortType(index)
+    const onClickListItem = (obj) => {
+        dispatch(setSort(obj))
         setOpen(false)
     }
 
@@ -32,17 +38,16 @@ export function Sort({value, setSelectSortType}) {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={() => {setOpen(!open)}}>{value.name}</span>
+                <span onClick={() => {setOpen(!open)}}>{sort.name}</span>
             </div>
             {open && <div className="sort__popup">
                 <ul>
                     {
-                        list.map((obj, index) => (
+                        sortList.map((obj, index) => (
                             <li
                                 key={index}
-                                onClick={() => {
-                                    onClickListItem(obj)}}
-                                className={value.name === obj.name ? 'active' : ''}
+                                onClick={() => {onClickListItem(obj)}}
+                                className={sort.name === obj.name ? 'active' : ''}
                             >
                                 {obj.name}
                             </li>
