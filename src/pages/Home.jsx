@@ -24,7 +24,7 @@ export function Home() {
     const [items, setItems] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
-    const setSelectCategory = (index) => {
+    const handleSelectCategory = (index) => {
         dispatch(setCategoryId(index))
     }
 
@@ -47,10 +47,10 @@ export function Home() {
         if (isMounted.current) {
             const queryString = qs.stringify({
                 sortProperty: sort.sortProperty,
-                categoryId,
+                categoryId: categoryId > 0 ? categoryId : null,
                 currentPage,
-            })
-            navigate(`?${queryString}`)
+            },{skipNulls: true})
+            navigate(`/?${queryString}`)
         }
         isMounted.current = true
     }, [categoryId, sort, currentPage])
@@ -82,7 +82,7 @@ export function Home() {
     return (
         <div className="container">
             <div className="content__top">
-                <Categories value={categoryId} setSelectCategory={setSelectCategory}/>
+                <Categories value={categoryId} onSelectCategoryClick={handleSelectCategory}/>
                 <Sort/>
             </div>
             <h2 className="content__title">Все пиццы</h2>

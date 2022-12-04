@@ -8,7 +8,7 @@ export function Search() {
     const [value, setValue] = useState('')
     const inputRef = useRef()
 
-    const clearInput = () => {
+    const handleClickClearInput = () => {
         setSearchValue('')
         setValue('')
         inputRef.current.focus()
@@ -19,7 +19,7 @@ export function Search() {
             setSearchValue(str)
         }, 500),[]
     )
-    const onChangeInput=(event)=>{
+    const handleChangeInput=(event)=>{
         setValue(event.currentTarget.value)
         updateSearchValue(event.currentTarget.value)
     }
@@ -34,13 +34,13 @@ export function Search() {
             <input
                 ref={inputRef}
                 value={value}
-                onChange={(e) => onChangeInput(e)}
+                onChange={(e) => handleChangeInput(e)}
                 className={s.input}
                 placeholder='Поиск пиццы ...'
             />
             {
                 value &&
-                <svg onClick={clearInput} className={s.clearIcon} height="48" viewBox="0 0 48 48"
+                <svg onClick={handleClickClearInput} className={s.clearIcon} height="48" viewBox="0 0 48 48"
                      width="48"
                      xmlns="http://www.w3.org/2000/svg">
                     <path

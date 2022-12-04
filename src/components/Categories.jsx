@@ -1,5 +1,5 @@
 
-export function Categories({value, setSelectCategory}) {
+export function Categories({value, onSelectCategoryClick}) {
     const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
 
@@ -11,7 +11,7 @@ export function Categories({value, setSelectCategory}) {
                     categories.map((categoryName, index) => (
                         <li
                             key={index}
-                            onClick={() => {setSelectCategory(index)}}
+                            onClick={() => {onSelectCategoryClick(index)}}
                             className={value === index ? 'active' : ''}>{categoryName}</li>
                     ))
                 }
