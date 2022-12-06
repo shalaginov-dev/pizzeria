@@ -13,7 +13,6 @@ export const cartSlice = createSlice({
             const findItem = state.items.find(obj => obj.id === action.payload.id)
 
             if (findItem) findItem.count++
-
             else state.items.push({...action.payload, count: 1})
             state.totalPrice = state.items.reduce((acc, el) => acc + (el.price * el.count), 0)
         },
