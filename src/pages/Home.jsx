@@ -1,6 +1,6 @@
-import { useEffect, useRef} from "react";
+import {useEffect, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import qs from 'qs'
 
 import {Categories} from "../components/Categories";
@@ -30,12 +30,14 @@ export function Home() {
         const sortBy = sort.sortProperty.replace('-', '')
         const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
         const category = categoryId > 0 ? `category=${categoryId}` : ''
+        const search = searchValue ? `search=${searchValue}` : ''
 
         dispatch(fetchPizzas({
                 currentPage,
                 sortBy,
                 order,
-                category
+                category,
+                search
             })
         )
         window.scrollTo(0, 0)
@@ -71,12 +73,13 @@ export function Home() {
             getPizzas()
         }
         isSearch.current = false
-    }, [categoryId, sort.sortProperty, currentPage])
+    }, [categoryId, sort.sortProperty, currentPage, searchValue])
 
 
     const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
     const pizzas = items.filter(obj => obj.title.toLowerCase().includes(searchValue.toLowerCase())).map(p => (
-        <PizzaBlock key={p.id}{...p}/>))
+        <PizzaBlock key={p.id} {...p}/>
+    ))
 
     return (
         <div className="container">
