@@ -9,7 +9,6 @@ import {MainLayout} from "./layouts/MainLayout";
 
 
 export function App() {
-
     return (
         <Routes>
             <Route path='/' element={<MainLayout/>}>
