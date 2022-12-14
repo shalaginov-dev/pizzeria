@@ -2,16 +2,29 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 
+interface Pizza {
+    category: number
+    id: string
+    imageUrl: string
+    price: number
+    rating: number
+    sizes: number[]
+    title: string
+    types: number[]
+}
+
 const typesName = ['тонкое', 'традиционное']
 
+
 export function SinglePizza() {
-    const [pizza, setPizza] = useState()
+    const [pizza, setPizza] = useState<Pizza>()
     const {id} = useParams()
     const navigate = useNavigate()
 
     const fetchPizzaById = async () => {
         try {
             const {data} = await axios.get(`https://637a27eb7419b414df9b01cf.mockapi.io/items/${id}`)
+            console.log(data)
             setPizza(data)
         } catch (e) {
             alert('Такой пиццы у нас нет :(')
@@ -31,7 +44,7 @@ export function SinglePizza() {
                         src={pizza.imageUrl}
                         alt="Pizza"
                     />
-                <h4 className="pizza-block__title">{pizza.title}</h4>
+                    <h4 className="pizza-block__title">{pizza.title}</h4>
                     <div className="pizza-block__selector">
                         <ul>
                             {

@@ -1,26 +1,37 @@
 import {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {addItem} from "../../redux/slices/cartSlice";
 import {Link} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../@types/hooks";
+
+import {addItem} from "../../redux/slices/cartSlice";
+
+interface PizzaBlockProps {
+    id: string
+    title: string
+    types: number[]
+    sizes: number[]
+    price: number
+    imageUrl: string
+    rating: number
+}
 
 const typesName = ['тонкое', 'традиционное']
 
-export function PizzaBlock({id, title, price, imageUrl, sizes, types}) {
-    const dispatch = useDispatch()
-    const cartItem = useSelector(state => state.cart.items.find(obj => obj.id === id))
+export function PizzaBlock({id, title, types, sizes, price, imageUrl}: PizzaBlockProps) {
+    const dispatch = useAppDispatch()
+    const cartItem = useAppSelector(state => state.cart.items.find(obj => obj.id === id))
     const [activeType, setActiveType] = useState(0)
     const [activeSize, setActiveSize] = useState(0)
 
     const addedCount = cartItem ? cartItem.count : 0
 
-    const addCartItem = () => {
+    const handleClickAddPizza = () => {
         const item = {
             id,
-            title,
-            price,
             imageUrl,
+            title,
             type: typesName[activeType],
             size: sizes[activeSize],
+            price,
         }
         dispatch(addItem(item))
     }
@@ -61,7 +72,7 @@ export function PizzaBlock({id, title, price, imageUrl, sizes, types}) {
                 </div>
                 <div className="pizza-block__bottom">
                     <div className="pizza-block__price">от {price} ₽</div>
-                    <button onClick={addCartItem} className="button button--outline button--add">
+                    <button onClick={handleClickAddPizza} className="button button--outline button--add">
                         <svg
                             width="12"
                             height="12"

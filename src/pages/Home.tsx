@@ -1,31 +1,26 @@
 import {useEffect, useRef} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Link, useNavigate} from "react-router-dom"
+import {useNavigate} from "react-router-dom"
+import {useAppDispatch, useAppSelector} from "../@types/hooks";
 import qs from 'qs'
 
 import {Categories} from "../components/Categories";
-import {Sort, sortList} from "../components/Sort";
+import {SortPopup, sortList} from "../components/SortPopup";
 import {Skeleton} from "../components/PizzaBlock/Skeleton";
 import {PizzaBlock} from "../components/PizzaBlock";
 import {Pagination} from "../components/Pagination";
-import {setCategoryId, setFilters} from "../redux/slices/filterSlice";
+import {setFilters} from "../redux/slices/filterSlice";
 import {fetchPizzas} from "../redux/slices/pizzaSlice";
+import {SetFilter, Sort} from "../@types/redux/filter";
 
 export function Home() {
     const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const isSearch = useRef(false)
     const isMounted = useRef(false)
 
-    const {categoryId, currentPage, sort, searchValue} = useSelector(state => state.filter)
-    const {items, status} = useSelector(state => state.pizza)
-
-
-    const handleSelectCategory = (index) => {
-        dispatch(setCategoryId(index))
-    }
-
-    const getPizzas = async () => {
+    const {categoryId, currentPage, sort, searchValue} = useAppSelector(state => state.filter)
+    const {items, status} = useAppSelector(state => state.pizza)
+    const getPizzas = () => {
 
         const sortBy = sort.sortProperty.replace('-', '')
         const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
@@ -60,9 +55,16 @@ export function Home() {
     //Если был первый рендер, то проверяем URL-параметры и сохраняем в редаксе
     useEffect(() => {
         if (window.location.search) {
-            const params = qs.parse(window.location.search.substring(1))
+            const params = qs.parse(window.location.search.substring(1)) as any
+            console.log(params)
             const sort = sortList.find(obj => obj.sortProperty === params.sortProperty)
-            dispatch(setFilters({...params, sort}))
+            console.log(sort)
+            dispatch(setFilters({
+                searchValue: params.searchValue,
+                categoryId: params.categoryId,
+                currentPage: params.currentPage,
+                sort:  sort || sortList[0]
+            }))
             isSearch.current = true
         }
     }, [])
@@ -77,15 +79,13 @@ export function Home() {
 
 
     const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
-    const pizzas = items.filter(obj => obj.title.toLowerCase().includes(searchValue.toLowerCase())).map(p => (
-        <PizzaBlock key={p.id} {...p}/>
-    ))
+    const pizzas = items.map((p: any) => (<PizzaBlock key={p.id} {...p}/>))
 
     return (
         <div className="container">
             <div className="content__top">
-                <Categories value={categoryId} onSelectCategoryClick={handleSelectCategory}/>
-                <Sort/>
+                <Categories categoryId={categoryId}/>
+                <SortPopup/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
             {
