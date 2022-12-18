@@ -1,31 +1,19 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import axios from "axios";
-
-interface Pizza {
-    category: number
-    id: string
-    imageUrl: string
-    price: number
-    rating: number
-    sizes: number[]
-    title: string
-    types: number[]
-}
+import {pizzaAPI} from "../api/pizza-api";
+import {PizzaItem} from "../redux/pizza/pizza-types";
 
 const typesName = ['тонкое', 'традиционное']
 
 
 export function SinglePizza() {
-    const [pizza, setPizza] = useState<Pizza>()
+    const [pizza, setPizza] = useState<PizzaItem>()
     const {id} = useParams()
     const navigate = useNavigate()
 
     const fetchPizzaById = async () => {
         try {
-            const {data} = await axios.get(`https://637a27eb7419b414df9b01cf.mockapi.io/items/${id}`)
-            console.log(data)
-            setPizza(data)
+            if (id) setPizza(await pizzaAPI.fetchPizzaById(id))
         } catch (e) {
             alert('Такой пиццы у нас нет :(')
             navigate('/')

@@ -1,8 +1,8 @@
 import {useState} from "react";
 import {Link} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../@types/hooks";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 
-import {addItem} from "../../redux/slices/cartSlice";
+import {addItem} from "../../redux/cart/cartSlice";
 
 interface PizzaBlockProps {
     id: string
@@ -44,8 +44,8 @@ export function PizzaBlock({id, title, types, sizes, price, imageUrl}: PizzaBloc
                         src={imageUrl}
                         alt="Pizza"
                     />
+                    <h4 className="pizza-block__title">{title}</h4>
                 </Link>
-                <h4 className="pizza-block__title">{title}</h4>
                 <div className="pizza-block__selector">
                     <ul>
                         {

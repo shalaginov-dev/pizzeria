@@ -1,15 +1,25 @@
 import {Link, useLocation} from "react-router-dom";
+import {useEffect, useRef} from "react";
 
 import {Search} from "./Search";
 import logoSvg from '../assets/img/pizza-logo.svg'
-import {useAppSelector} from "../@types/hooks";
+import {useAppSelector} from "../redux/hooks";
 
 
 export function Header() {
     const {totalPrice, items} = useAppSelector(state => state.cart)
     const location = useLocation()
+    const isMounted = useRef(false)
 
-    const totalCount = items.reduce((acc: number, item: any)=> acc + item.count, 0)
+    const totalCount = items.reduce((acc: number, item) => acc + item.count, 0)
+
+    useEffect(() => {
+        if (isMounted.current){
+            const json = JSON.stringify(items)
+            localStorage.setItem('cart', json)
+        }
+        isMounted.current = true
+    }, [items])
 
     return (
         <div className="header">
@@ -18,12 +28,14 @@ export function Header() {
                     <div className="header__logo">
                         <img width="38" src={logoSvg} alt="Pizza logo"/>
                         <div>
-                            <h1>Joe's Pizzeria</h1>
+                            <h1>Joe's Pizza</h1>
                             <p>самая вкусная пицца во вселенной</p>
                         </div>
                     </div>
                 </Link>
-                <Search/>
+                {
+                    location.pathname !== '/cart' && <Search/>
+                }
                 <div className="header__cart">
                     {
                         location.pathname !== '/cart' && (

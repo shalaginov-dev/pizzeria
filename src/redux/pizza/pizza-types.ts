@@ -1,5 +1,3 @@
-import {Sort} from "./filter";
-
 export enum STATUS {
     LOADING = 'loading',
     SUCCESS = 'success',

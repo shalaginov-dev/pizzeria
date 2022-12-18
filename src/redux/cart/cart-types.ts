@@ -1,4 +1,4 @@
-interface CartPizzaItem {
+export interface CartPizzaItem {
     id: string
     imageUrl: string
     title: string

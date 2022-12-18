@@ -1,12 +1,12 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {Filter, SORT_PROPERTY, Sort, SetFilter} from "../../@types/redux/filter";
+import {Filter, SORT_PROPERTY, Sort, SetFilterArgs} from "./filter-types";
 
 const initialState: Filter = {
     searchValue: '',
     categoryId: 0,
     currentPage: 1,
     sort: {
-        name: 'популярности',
+        name: 'популярности (DESC)',
         sortProperty: SORT_PROPERTY.RATING_DESC
     }
 }
@@ -27,7 +27,7 @@ export const filterSlice = createSlice({
         setCurrentPage(state, action: PayloadAction<number>) {
             state.currentPage = action.payload
         },
-        setFilters(state, action: PayloadAction<SetFilter>) {
+        setFilters(state, action: PayloadAction<SetFilterArgs>) {
             if (Object.keys(action.payload).length) {
                 state.searchValue = action.payload.searchValue
                 state.categoryId = Number(action.payload.categoryId)

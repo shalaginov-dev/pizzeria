@@ -1,7 +1,7 @@
 import s from './Pagination.module.scss'
 import ReactPaginate from 'react-paginate'
-import {setCurrentPage} from "../../redux/slices/filterSlice";
-import {useAppDispatch} from "../../@types/hooks";
+import {setCurrentPage} from "../../redux/filter/filterSlice";
+import {useAppDispatch} from "../../redux/hooks";
 
 interface PaginationProps{
     currentPage: number

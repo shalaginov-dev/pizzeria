@@ -24,17 +24,18 @@ body {
 .content {
   padding: 40px 0;
 
-  &__error-info{
+  &__error-info {
     margin: 100px auto;
     width: 500px;
     text-align: center;
 
-    h2{
+    h2 {
       font-size: 32px;
       font-weight: 700;
       margin-bottom: 10px;
     }
-    p{
+
+    p {
       font-size: 20px;
     }
   }
@@ -227,6 +228,23 @@ body {
         svg {
           path:first-of-type {
             display: none;
+          }
+        }
+
+        &:disabled {
+          opacity: 0.4;
+          border-color: #787878;
+          &:active{
+            transform: none;
+          }
+          &:hover {
+            background: transparent;
+            svg path {
+              fill: #787878;
+            }
+          }
+          svg path {
+            fill: #787878;
           }
         }
       }

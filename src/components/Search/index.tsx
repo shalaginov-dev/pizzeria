@@ -2,8 +2,8 @@ import {ChangeEvent, useCallback, useRef, useState} from "react";
 import debounce from 'lodash.debounce'
 
 import s from './Search.module.scss'
-import {setSearchValue} from "../../redux/slices/filterSlice";
-import {useAppDispatch} from "../../@types/hooks";
+import {setSearchValue} from "../../redux/filter/filterSlice";
+import {useAppDispatch} from "../../redux/hooks";
 
 export function Search() {
     const dispatch = useAppDispatch()

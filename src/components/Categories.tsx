@@ -1,5 +1,6 @@
-import {useAppDispatch} from "../@types/hooks";
-import {setCategoryId} from "../redux/slices/filterSlice";
+import {useAppDispatch} from "../redux/hooks";
+import {setCategoryId} from "../redux/filter/filterSlice";
+import {memo} from "react";
 
 interface CategoriesProps {
     categoryId: number
@@ -7,7 +8,7 @@ interface CategoriesProps {
 
 const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
-export function Categories({categoryId}: CategoriesProps) {
+export const Categories = memo(({categoryId}: CategoriesProps) => {
     const dispatch = useAppDispatch()
 
     return (
@@ -17,7 +18,9 @@ export function Categories({categoryId}: CategoriesProps) {
                     categories.map((categoryName, index) => (
                         <li
                             key={index}
-                            onClick={() => {dispatch(setCategoryId(index))}}
+                            onClick={() => {
+                                dispatch(setCategoryId(index))
+                            }}
                             className={categoryId === index ? 'active' : ''}>{categoryName}</li>
                     ))
                 }
@@ -25,4 +28,4 @@ export function Categories({categoryId}: CategoriesProps) {
         </div>
 
     )
-}
+})

@@ -21,9 +21,16 @@ export interface Sort {
     sortProperty: SORT_PROPERTY
 }
 
-export interface SetFilter {
+export interface SetFilterArgs {
     searchValue: string
     categoryId: string
     currentPage: string
     sort: Sort
+}
+
+export interface ParseParams {
+    searchValue: string
+    categoryId: string
+    currentPage: string
+    sortProperty: string
 }

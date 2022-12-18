@@ -1,15 +1,15 @@
 import {Link} from 'react-router-dom'
 
-import {useAppDispatch, useAppSelector} from "../@types/hooks";
+import {useAppDispatch, useAppSelector} from "../redux/hooks";
 import {CartPizzaItem} from "../components/CartPizzaItem";
-import {clearItems} from "../redux/slices/cartSlice";
+import {clearItems} from "../redux/cart/cartSlice";
 import {CartEmpty} from "../components/CartEmpty";
 
 export function Cart() {
     const dispatch = useAppDispatch()
     const {items, totalPrice} = useAppSelector(state => state.cart)
 
-    const totalCount = items.reduce((acc: number, item: any) => acc + item.count, 0)
+    const totalCount = items.reduce((acc: number, item) => acc + item.count, 0)
 
     const handleClickClear = () => {
         if (window.confirm('Очистить корзину?'))
@@ -53,7 +53,7 @@ export function Cart() {
                     </div>
                     <div className="content__items">
                         {
-                            items.map((item: any) => <CartPizzaItem key={item.id} {...item}/>)
+                            items.map((item) => <CartPizzaItem key={item.id} {...item}/>)
                         }
                     </div>
                     <div className="cart__bottom">

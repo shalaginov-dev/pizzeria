@@ -1,7 +1,11 @@
-import {useEffect, useRef, useState} from "react";
-import {useAppDispatch, useAppSelector} from "../@types/hooks";
-import {setSort} from "../redux/slices/filterSlice";
-import {SORT_PROPERTY, Sort} from "../@types/redux/filter";
+import {memo, useEffect, useRef, useState} from "react";
+import {useAppDispatch} from "../redux/hooks";
+import {setSort} from "../redux/filter/filterSlice";
+import {SORT_PROPERTY, Sort} from "../redux/filter/filter-types";
+
+interface SortPopupProps{
+    sort: Sort
+}
 
 export const sortList: Sort[] = [
     {name: 'популярности (DESC)', sortProperty: SORT_PROPERTY.RATING_DESC},
@@ -12,11 +16,9 @@ export const sortList: Sort[] = [
     {name: 'алфавиту (ASC)', sortProperty: SORT_PROPERTY.TITLE_ASC},
 ]
 
-export function SortPopup() {
+export const SortPopup = memo(({sort}: SortPopupProps) => {
     const dispatch = useAppDispatch()
-    const sort = useAppSelector(state => state.filter.sort)
     const sortRef = useRef<HTMLDivElement>(null)
-
     const [open, setOpen] = useState(false)
 
     const handleClickSort = (obj: Sort) => {
@@ -26,7 +28,7 @@ export function SortPopup() {
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            const _event = event as MouseEvent & {path: Node[]}
+            const _event = event as MouseEvent & { path: Node[] }
 
             if (sortRef.current && !_event.path.includes(sortRef.current)) {
                 setOpen(false)
@@ -64,7 +66,9 @@ export function SortPopup() {
                         sortList.map((obj, index) => (
                             <li
                                 key={index}
-                                onClick={() => {handleClickSort(obj)}}
+                                onClick={() => {
+                                    handleClickSort(obj)
+                                }}
                                 className={sort.name === obj.name ? 'active' : ''}
                             >{obj.name}</li>
                         ))
@@ -74,4 +78,4 @@ export function SortPopup() {
         </div>
 
     )
-}
+})

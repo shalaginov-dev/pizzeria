@@ -1,6 +1,6 @@
 import {useEffect, useRef} from "react";
 import {useNavigate} from "react-router-dom"
-import {useAppDispatch, useAppSelector} from "../@types/hooks";
+import {useAppDispatch, useAppSelector} from "../redux/hooks";
 import qs from 'qs'
 
 import {Categories} from "../components/Categories";
@@ -8,13 +8,13 @@ import {SortPopup, sortList} from "../components/SortPopup";
 import {Skeleton} from "../components/PizzaBlock/Skeleton";
 import {PizzaBlock} from "../components/PizzaBlock";
 import {Pagination} from "../components/Pagination";
-import {setFilters} from "../redux/slices/filterSlice";
-import {fetchPizzas} from "../redux/slices/pizzaSlice";
-import {SetFilter, Sort} from "../@types/redux/filter";
+import {setFilters} from "../redux/filter/filterSlice";
+import {fetchPizzas} from "../redux/pizza/asyncActions";
+import {ParseParams} from "../redux/filter/filter-types";
 
 export function Home() {
-    const navigate = useNavigate()
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const isSearch = useRef(false)
     const isMounted = useRef(false)
 
@@ -55,15 +55,13 @@ export function Home() {
     //Если был первый рендер, то проверяем URL-параметры и сохраняем в редаксе
     useEffect(() => {
         if (window.location.search) {
-            const params = qs.parse(window.location.search.substring(1)) as any
-            console.log(params)
+            const params = qs.parse(window.location.search.substring(1)) as unknown as ParseParams
             const sort = sortList.find(obj => obj.sortProperty === params.sortProperty)
-            console.log(sort)
             dispatch(setFilters({
                 searchValue: params.searchValue,
                 categoryId: params.categoryId,
                 currentPage: params.currentPage,
-                sort:  sort || sortList[0]
+                sort: sort || sortList[0]
             }))
             isSearch.current = true
         }
@@ -79,13 +77,13 @@ export function Home() {
 
 
     const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
-    const pizzas = items.map((p: any) => (<PizzaBlock key={p.id} {...p}/>))
+    const pizzas = items.map((p) => (<PizzaBlock key={p.id} {...p}/>))
 
     return (
         <div className="container">
             <div className="content__top">
                 <Categories categoryId={categoryId}/>
-                <SortPopup/>
+                <SortPopup sort={sort}/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
             {
@@ -95,7 +93,6 @@ export function Home() {
                         <p>Не удалось получить пиццы, повторите попытку позже...</p>
                     </div>
                     : <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
-
             }
             <Pagination currentPage={currentPage}/>
         </div>
