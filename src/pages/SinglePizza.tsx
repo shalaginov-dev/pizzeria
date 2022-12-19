@@ -6,7 +6,7 @@ import {PizzaItem} from "../redux/pizza/pizza-types";
 const typesName = ['тонкое', 'традиционное']
 
 
-export function SinglePizza() {
+function SinglePizza() {
     const [pizza, setPizza] = useState<PizzaItem>()
     const {id} = useParams()
     const navigate = useNavigate()
@@ -60,3 +60,5 @@ export function SinglePizza() {
             </div>
     )
 }
+
+export default SinglePizza

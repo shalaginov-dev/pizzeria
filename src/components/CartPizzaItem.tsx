@@ -12,7 +12,7 @@ interface CartPizzaItemProps {
 
 }
 
-export function CartPizzaItem({id, title, type, size, price, count, imageUrl}: CartPizzaItemProps) {
+ function CartPizzaItem({id, title, type, size, price, count, imageUrl}: CartPizzaItemProps) {
     const dispatch = useAppDispatch()
 
     const handleClickPlus = () => {
@@ -87,3 +87,5 @@ export function CartPizzaItem({id, title, type, size, price, count, imageUrl}: C
         </div>
     )
 }
+
+export default CartPizzaItem

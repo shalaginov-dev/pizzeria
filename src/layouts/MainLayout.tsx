@@ -1,7 +1,7 @@
-import {Header} from "../components/Header";
+import Header from "../components/Header";
 import {Outlet} from 'react-router-dom'
 
-export function MainLayout() {
+function MainLayout() {
     return (
         <div className="wrapper">
             <Header/>
@@ -11,3 +11,5 @@ export function MainLayout() {
         </div>
     )
 }
+
+export default MainLayout

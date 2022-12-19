@@ -1,12 +1,12 @@
 import {Link, useLocation} from "react-router-dom";
 import {useEffect, useRef} from "react";
 
-import {Search} from "./Search";
+import Search from "./Search";
 import logoSvg from '../assets/img/pizza-logo.svg'
 import {useAppSelector} from "../redux/hooks";
 
 
-export function Header() {
+ function Header() {
     const {totalPrice, items} = useAppSelector(state => state.cart)
     const location = useLocation()
     const isMounted = useRef(false)
@@ -81,3 +81,5 @@ export function Header() {
 
     )
 }
+
+export default Header

@@ -7,7 +7,7 @@ interface PaginationProps{
     currentPage: number
 }
 
-export function Pagination({currentPage}:PaginationProps) {
+ function Pagination({currentPage}:PaginationProps) {
     const dispatch = useAppDispatch()
 
     return (
@@ -23,3 +23,5 @@ export function Pagination({currentPage}:PaginationProps) {
         />
     )
 }
+
+export default Pagination

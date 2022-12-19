@@ -1,6 +1,6 @@
 import s from './NotFoundBlock.module.scss'
 
-export function NotFoundBlock() {
+function NotFoundBlock() {
     return (
         <div className={s.root}>
             <h1 >
@@ -12,3 +12,5 @@ export function NotFoundBlock() {
         </div>
     )
 }
+
+export default NotFoundBlock

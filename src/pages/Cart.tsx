@@ -1,11 +1,11 @@
 import {Link} from 'react-router-dom'
 
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
-import {CartPizzaItem} from "../components/CartPizzaItem";
+import CartPizzaItem from "../components/CartPizzaItem";
 import {clearItems} from "../redux/cart/cartSlice";
-import {CartEmpty} from "../components/CartEmpty";
+import CartEmpty from "../components/CartEmpty";
 
-export function Cart() {
+function Cart() {
     const dispatch = useAppDispatch()
     const {items, totalPrice} = useAppSelector(state => state.cart)
 
@@ -80,3 +80,5 @@ export function Cart() {
             </div>
     )
 }
+
+export default Cart

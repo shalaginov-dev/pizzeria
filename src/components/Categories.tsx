@@ -8,7 +8,7 @@ interface CategoriesProps {
 
 const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
-export const Categories = memo(({categoryId}: CategoriesProps) => {
+ const Categories = memo(({categoryId}: CategoriesProps) => {
     const dispatch = useAppDispatch()
 
     return (
@@ -29,3 +29,5 @@ export const Categories = memo(({categoryId}: CategoriesProps) => {
 
     )
 })
+
+export default Categories

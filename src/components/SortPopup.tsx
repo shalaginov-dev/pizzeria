@@ -16,7 +16,7 @@ export const sortList: Sort[] = [
     {name: 'алфавиту (ASC)', sortProperty: SORT_PROPERTY.TITLE_ASC},
 ]
 
-export const SortPopup = memo(({sort}: SortPopupProps) => {
+ const SortPopup = memo(({sort}: SortPopupProps) => {
     const dispatch = useAppDispatch()
     const sortRef = useRef<HTMLDivElement>(null)
     const [open, setOpen] = useState(false)
@@ -79,3 +79,5 @@ export const SortPopup = memo(({sort}: SortPopupProps) => {
 
     )
 })
+
+export default SortPopup

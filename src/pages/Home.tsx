@@ -1,18 +1,15 @@
 import {useEffect, useRef} from "react";
 import {useNavigate} from "react-router-dom"
-import {useAppDispatch, useAppSelector} from "../redux/hooks";
 import qs from 'qs'
 
-import {Categories} from "../components/Categories";
-import {SortPopup, sortList} from "../components/SortPopup";
-import {Skeleton} from "../components/PizzaBlock/Skeleton";
-import {PizzaBlock} from "../components/PizzaBlock";
-import {Pagination} from "../components/Pagination";
+import {useAppDispatch, useAppSelector} from "../redux/hooks";
 import {setFilters} from "../redux/filter/filterSlice";
 import {fetchPizzas} from "../redux/pizza/asyncActions";
 import {ParseParams} from "../redux/filter/filter-types";
+import {sortList} from "../components/SortPopup";
+import {Categories, SortPopup, Skeleton, PizzaBlock, Pagination} from '../components'
 
-export function Home() {
+function Home() {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const isSearch = useRef(false)
@@ -98,3 +95,5 @@ export function Home() {
         </div>
     )
 }
+
+export default Home

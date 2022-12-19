@@ -16,7 +16,7 @@ interface PizzaBlockProps {
 
 const typesName = ['тонкое', 'традиционное']
 
-export function PizzaBlock({id, title, types, sizes, price, imageUrl}: PizzaBlockProps) {
+ function PizzaBlock({id, title, types, sizes, price, imageUrl}: PizzaBlockProps) {
     const dispatch = useAppDispatch()
     const cartItem = useAppSelector(state => state.cart.items.find(obj => obj.id === id))
     const [activeType, setActiveType] = useState(0)
@@ -93,3 +93,5 @@ export function PizzaBlock({id, title, types, sizes, price, imageUrl}: PizzaBloc
         </div>
     )
 }
+
+export default PizzaBlock
