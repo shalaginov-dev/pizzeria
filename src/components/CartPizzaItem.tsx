@@ -1,5 +1,7 @@
 import {minusItem, plusItem, removeItem} from "../redux/cart/cartSlice";
 import {useAppDispatch} from "../redux/hooks";
+import {Modal} from "./Helpers/Modal";
+import {useState} from "react";
 
 interface CartPizzaItemProps {
     id: string
@@ -13,6 +15,7 @@ interface CartPizzaItemProps {
 
 export function CartPizzaItem({id, title, type, size, price, count, imageUrl}: CartPizzaItemProps) {
     const dispatch = useAppDispatch()
+    const [modalActive, setModalActive] = useState(false)
 
     const handleClickPlus = () => {
         dispatch(plusItem(id))
@@ -21,12 +24,17 @@ export function CartPizzaItem({id, title, type, size, price, count, imageUrl}: C
         dispatch(minusItem(id))
     }
     const handleClickRemove = () => {
-        if (window.confirm('Ты действительно хочешь удалить товар?'))
             dispatch(removeItem(id))
     }
 
     return (
         <div className="cart__item">
+            <Modal
+                active={modalActive}
+                value={'Удалить данный товар?'}
+                onActiveModalClick={(value) => setModalActive(value)}
+                onConfirmCLick={handleClickRemove}
+            />
             <div className="img_title">
                 <div className="cart__item-img">
                     <img
@@ -76,7 +84,7 @@ export function CartPizzaItem({id, title, type, size, price, count, imageUrl}: C
                 </div>
 
                 <div className="cart__item-remove">
-                    <button onClick={handleClickRemove} className="button button--circle cart__item-remove-btn">
+                    <button onClick={() => setModalActive(true)} className="button button--circle cart__item-remove-btn">
                         <svg width="15" height="15" viewBox="0 0 48 48" fill="#787878"
                              xmlns="http://www.w3.org/2000/svg">
                             <path

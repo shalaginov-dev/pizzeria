@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {useEffect} from "react";
-import {Skeleton} from "../components";
+import {useEffect, useState} from "react";
+import {SimpleModal, Skeleton} from "../components";
 import {fetchPizzaById} from "../redux/pizza/asyncActions";
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
 import {STATUS} from "../redux/pizza/pizzaTypes";
@@ -11,6 +11,7 @@ function SinglePizza() {
     const dispatch = useAppDispatch()
     const pizza = useAppSelector(state => state.pizza.items[0])
     const loading = useAppSelector(state => state.pizza.loading)
+    const [modalActive, setModalActive] = useState(false)
     const {id} = useParams()
     const navigate = useNavigate()
 
@@ -20,13 +21,22 @@ function SinglePizza() {
 
     useEffect(() => {
         if (loading === STATUS.FAILED) {
-            alert('Нету такой пиццы')
-            navigate('/')
+            setModalActive(true)
         }
     }, [loading])
 
     return (!pizza
             ? <div className="pizza-block-wrapper">
+                <SimpleModal
+                    active={modalActive}
+                    onConfirmCLick={() => {
+                        navigate('/')
+                    }}
+                    value={'Такой пиццы нету'}
+                    onActiveModalClick={() => {
+                        navigate('/')
+                    }}
+                />
                 <Skeleton/>
             </div>
             : <div className="pizza-block-wrapper">
@@ -40,7 +50,7 @@ function SinglePizza() {
                     <div className="pizza-block__selector">
                         <ul>
                             {
-                                pizza.types.map((t, index) => (
+                                pizza.types.map((t) => (
                                     <li
                                         key={t}
                                     >{typesName[t]}

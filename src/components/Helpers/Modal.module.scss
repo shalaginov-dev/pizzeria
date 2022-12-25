@@ -28,7 +28,7 @@
   background-color: white;
   transform: scale(0.5);
   transition: 0.4s all;
-  width: 70vw;
+  width: 50vw;
   @media (max-width: 760px) {
     width: 80vw;
     padding: 10px;
@@ -43,7 +43,11 @@
   font-size: 20px;
   font-weight: 800;
   margin: 20px 0;
-}
+  @media (max-width: 760px) {
+    font-size: 18px;
+    margin: 15px 0 5px;
+  }
+  }
 
 .buttonsBlock button {
   font-size: 16px;
