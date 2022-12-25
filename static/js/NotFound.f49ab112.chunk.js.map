@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/NotFound.f49ab112.chunk.js","mappings":"6IAQA,UANA,WACI,OACI,SAAC,KAAa,GAEtB,C","sources":["pages/NotFound.tsx"],"sourcesContent":["import {NotFoundBlock} from \"../components\";\n\nfunction NotFound() {\n    return (\n        <NotFoundBlock/>\n    )\n}\n\nexport default NotFound"],"names":[],"sourceRoot":""}
