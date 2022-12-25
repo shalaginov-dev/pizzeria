@@ -1,6 +1,6 @@
-import s from './Preloader2.module.scss'
+import s from './Preloader.module.scss'
 
-function Preloader2 () {
+function Preloader () {
     return (
         <div className={s.preloaderWrapper}>
             <div className={s.ldsRing}>
@@ -13,4 +13,4 @@ function Preloader2 () {
     )
 }
 
-export default Preloader2
+export default Preloader

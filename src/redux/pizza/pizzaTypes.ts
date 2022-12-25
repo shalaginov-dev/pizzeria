@@ -1,7 +1,8 @@
 export enum STATUS {
-    LOADING = 'loading',
+    IDLE = 'idle',
+    PENDING = 'pending',
     SUCCESS = 'success',
-    ERROR = 'error',
+    FAILED = 'failed',
 }
 
 export interface PizzaItem {
@@ -17,7 +18,7 @@ export interface PizzaItem {
 
 export interface Pizza {
     items: PizzaItem[]
-    status: STATUS
+    loading: STATUS
 }
 
 export interface FetchPizzaParams {

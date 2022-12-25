@@ -3,11 +3,11 @@ import ReactPaginate from 'react-paginate'
 import {setCurrentPage} from "../../redux/filter/filterSlice";
 import {useAppDispatch} from "../../redux/hooks";
 
-interface PaginationProps{
+interface PaginationProps {
     currentPage: number
 }
 
- function Pagination({currentPage}:PaginationProps) {
+export function Pagination({currentPage}: PaginationProps) {
     const dispatch = useAppDispatch()
 
     return (
@@ -16,12 +16,12 @@ interface PaginationProps{
             breakLabel="..."
             nextLabel=">"
             previousLabel="<"
-            onPageChange={(event) => {dispatch(setCurrentPage(event.selected + 1))}}
+            onPageChange={(event) => {
+                dispatch(setCurrentPage(event.selected + 1))
+            }}
             pageRangeDisplayed={4}
             pageCount={3}
             forcePage={currentPage - 1}
         />
     )
 }
-
-export default Pagination

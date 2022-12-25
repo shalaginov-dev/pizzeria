@@ -5,7 +5,7 @@ import s from './Search.module.scss'
 import {setSearchValue} from "../../redux/filter/filterSlice";
 import {useAppDispatch} from "../../redux/hooks";
 
- function Search() {
+export function Search() {
     const dispatch = useAppDispatch()
     const [value, setValue] = useState('')
     const inputRef = useRef<HTMLInputElement>(null)
@@ -54,5 +54,3 @@ import {useAppDispatch} from "../../redux/hooks";
         </div>
     )
 }
-
-export default Search

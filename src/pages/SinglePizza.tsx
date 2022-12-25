@@ -1,30 +1,34 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {pizzaAPI} from "../api/pizza-api";
-import {PizzaItem} from "../redux/pizza/pizza-types";
+import {useEffect} from "react";
+import {Skeleton} from "../components";
+import {fetchPizzaById} from "../redux/pizza/asyncActions";
+import {useAppDispatch, useAppSelector} from "../redux/hooks";
+import {STATUS} from "../redux/pizza/pizzaTypes";
 
 const typesName = ['тонкое', 'традиционное']
 
-
 function SinglePizza() {
-    const [pizza, setPizza] = useState<PizzaItem>()
+    const dispatch = useAppDispatch()
+    const pizza = useAppSelector(state => state.pizza.items[0])
+    const loading = useAppSelector(state => state.pizza.loading)
     const {id} = useParams()
     const navigate = useNavigate()
 
-    const fetchPizzaById = async () => {
-        try {
-            if (id) setPizza(await pizzaAPI.fetchPizzaById(id))
-        } catch (e) {
-            alert('Такой пиццы у нас нет :(')
-            navigate('/')
-        }
-    }
     useEffect(() => {
-        fetchPizzaById()
+        dispatch(fetchPizzaById(id as string))
     }, [])
 
+    useEffect(() => {
+        if (loading === STATUS.FAILED) {
+            alert('Нету такой пиццы')
+            navigate('/')
+        }
+    }, [loading])
 
-    return (!pizza ? <p>Загрузка...</p>
+    return (!pizza
+            ? <div className="pizza-block-wrapper">
+                <Skeleton/>
+            </div>
             : <div className="pizza-block-wrapper">
                 <div className="pizza-block">
                     <img

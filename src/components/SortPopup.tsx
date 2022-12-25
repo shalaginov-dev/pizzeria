@@ -1,9 +1,9 @@
 import {memo, useEffect, useRef, useState} from "react";
 import {useAppDispatch} from "../redux/hooks";
 import {setSort} from "../redux/filter/filterSlice";
-import {SORT_PROPERTY, Sort} from "../redux/filter/filter-types";
+import {SORT_PROPERTY, Sort} from "../redux/filter/filterTypes";
 
-interface SortPopupProps{
+interface SortPopupProps {
     sort: Sort
 }
 
@@ -16,7 +16,7 @@ export const sortList: Sort[] = [
     {name: 'алфавиту (ASC)', sortProperty: SORT_PROPERTY.TITLE_ASC},
 ]
 
- const SortPopup = memo(({sort}: SortPopupProps) => {
+export const SortPopup = memo(({sort}: SortPopupProps) => {
     const dispatch = useAppDispatch()
     const sortRef = useRef<HTMLDivElement>(null)
     const [open, setOpen] = useState(false)
@@ -79,5 +79,3 @@ export const sortList: Sort[] = [
 
     )
 })
-
-export default SortPopup

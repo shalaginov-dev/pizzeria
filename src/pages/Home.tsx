@@ -1,13 +1,15 @@
 import {useEffect, useRef} from "react";
-import {useNavigate} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import qs from 'qs'
 
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
 import {setFilters} from "../redux/filter/filterSlice";
 import {fetchPizzas} from "../redux/pizza/asyncActions";
-import {ParseParams} from "../redux/filter/filter-types";
-import {sortList} from "../components/SortPopup";
+import {ParseParams} from "../redux/filter/filterTypes";
+import {sortList} from "../components";
 import {Categories, SortPopup, Skeleton, PizzaBlock, Pagination} from '../components'
+import {STATUS} from "../redux/pizza/pizzaTypes";
+import {CartButton} from "../components/Buttons/CartButton";
 
 function Home() {
     const dispatch = useAppDispatch()
@@ -16,7 +18,7 @@ function Home() {
     const isMounted = useRef(false)
 
     const {categoryId, currentPage, sort, searchValue} = useAppSelector(state => state.filter)
-    const {items, status} = useAppSelector(state => state.pizza)
+    const {items, loading} = useAppSelector(state => state.pizza)
     const getPizzas = () => {
 
         const sortBy = sort.sortProperty.replace('-', '')
@@ -84,14 +86,19 @@ function Home() {
             </div>
             <h2 className="content__title">Все пиццы</h2>
             {
-                status === 'error' ?
+                loading === STATUS.FAILED ?
                     <div className="content__error-info">
                         <h2>Произошла ошибка</h2>
                         <p>Не удалось получить пиццы, повторите попытку позже...</p>
                     </div>
-                    : <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
+                    : <div className="content__items">{loading === STATUS.PENDING ? skeletons : pizzas}</div>
             }
-            <Pagination currentPage={currentPage}/>
+            <div className="footer">
+                <Link to="/cart" className="button button--cart">
+                    <CartButton/>
+                </Link>
+                <Pagination currentPage={currentPage}/>
+            </div>
         </div>
     )
 }

@@ -1,6 +1,6 @@
+import {memo} from "react";
 import {useAppDispatch} from "../redux/hooks";
 import {setCategoryId} from "../redux/filter/filterSlice";
-import {memo} from "react";
 
 interface CategoriesProps {
     categoryId: number
@@ -8,7 +8,7 @@ interface CategoriesProps {
 
 const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
- const Categories = memo(({categoryId}: CategoriesProps) => {
+export const Categories = memo(({categoryId}: CategoriesProps) => {
     const dispatch = useAppDispatch()
 
     return (
@@ -29,5 +29,3 @@ const categories = ['Все', 'Мясные', 'Вегетарианская', '�
 
     )
 })
-
-export default Categories

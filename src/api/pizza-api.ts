@@ -1,5 +1,5 @@
 import axios from "axios";
-import {PizzaItem} from "../redux/pizza/pizza-types";
+import {PizzaItem} from "../redux/pizza/pizzaTypes";
 
 
 export const pizzaAPI = {
@@ -10,5 +10,6 @@ export const pizzaAPI = {
     fetchPizzaById(id: string) {
         return axios.get<PizzaItem>(`https://637a27eb7419b414df9b01cf.mockapi.io/items/${id}`)
             .then(response => response.data)
+            .catch(error => error)
     }
 }

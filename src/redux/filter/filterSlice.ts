@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {Filter, SORT_PROPERTY, Sort, SetFilterArgs} from "./filter-types";
+import {Filter, SORT_PROPERTY, Sort, SetFilterArgs} from "./filterTypes";
 
 const initialState: Filter = {
     searchValue: '',

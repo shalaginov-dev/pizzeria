@@ -1,24 +1,30 @@
 import {Link} from 'react-router-dom'
 
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
-import CartPizzaItem from "../components/CartPizzaItem";
 import {clearItems} from "../redux/cart/cartSlice";
-import CartEmpty from "../components/CartEmpty";
+import {CartEmpty, CartPizzaItem, Modal} from '../components';
+import {useState} from "react";
 
 function Cart() {
     const dispatch = useAppDispatch()
     const {items, totalPrice} = useAppSelector(state => state.cart)
+    const [modalActive, setModalActive] = useState(false)
 
     const totalCount = items.reduce((acc: number, item) => acc + item.count, 0)
 
     const handleClickClear = () => {
-        if (window.confirm('Очистить корзину?'))
-            dispatch(clearItems())
+        dispatch(clearItems())
     }
 
     return (
         !totalPrice ? <CartEmpty/>
             : <div className="container container--cart">
+                <Modal
+                    active={modalActive}
+                    value={'Очистить корзину?'}
+                    onActiveModalClick={(value) => setModalActive(value)}
+                    onConfirmCLick={handleClickClear}
+                />
                 <div className="cart">
                     <div className="cart__top">
                         <h2 className="content__title">
@@ -35,7 +41,7 @@ function Cart() {
                             </svg>
                             Корзина
                         </h2>
-                        <div onClick={handleClickClear} className="cart__clear">
+                        <div onClick={() => setModalActive(true)} className="cart__clear">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M2.5 5H4.16667H17.5" stroke="#B6B6B6" strokeWidth="1.2" strokeLinecap="round"
                                       strokeLinejoin="round"/>
@@ -47,7 +53,6 @@ function Cart() {
                                 <path d="M11.6666 9.16667V14.1667" stroke="#B6B6B6" strokeWidth="1.2"
                                       strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
-
                             <span>Очистить корзину</span>
                         </div>
                     </div>
