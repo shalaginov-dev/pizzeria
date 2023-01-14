@@ -19,6 +19,7 @@ function Home() {
 
     const {categoryId, currentPage, sort, searchValue} = useAppSelector(state => state.filter)
     const {items, loading} = useAppSelector(state => state.pizza)
+
     const getPizzas = () => {
 
         const sortBy = sort.sortProperty.replace('-', '')

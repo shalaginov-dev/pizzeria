@@ -19,5 +19,5 @@ export function App() {
                 <Route path="*" element={<Suspense><NotFound/></Suspense>}/>
             </Route>
         </Routes>
-    );
+    )
 }
