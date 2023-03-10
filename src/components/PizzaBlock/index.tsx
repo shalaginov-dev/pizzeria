@@ -39,14 +39,18 @@ export function PizzaBlock({id, title, types, sizes, price, imageUrl}: PizzaBloc
     return (
         <div className="pizza-block-wrapper">
             <div className="pizza-block">
-                <Link to={`/pizza/${id}`}>
-                    <img
-                        className="pizza-block__image"
-                        src={imageUrl}
-                        alt="Pizza"
-                    />
-                    <h4 className="pizza-block__title">{title}</h4>
-                </Link>
+                <div className="pizza-block-link">
+                    <Link to={`/pizza/${id}`}>
+                        <img
+                            className="pizza-block__image"
+                            src={imageUrl}
+                            alt="Pizza"
+                        />
+                        <div className="pizza-block__title-wrapper">
+                            <h4 className="pizza-block__title">{title}</h4>
+                        </div>
+                    </Link>
+                </div>
                 <div className="pizza-block__selector">
                     <ul>
                         {
